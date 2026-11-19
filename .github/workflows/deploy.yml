@@ -19,6 +19,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Bundle Higgsfield pixel art
+        run: |
+          mkdir -p assets
+          curl --fail --location --retry 3 --silent --show-error 'https://d8j0ntlcm91z4.cloudfront.net/user_3D3stTPIqnNrvr2c1wNrXfy7DEW/hf_20261119_013541_09b7fad8-0bc9-4ae8-bb7c-fa0424f1508f.png' -o assets/runebreaker.png
+          curl --fail --location --retry 3 --silent --show-error 'https://d8j0ntlcm91z4.cloudfront.net/user_3D3stTPIqnNrvr2c1wNrXfy7DEW/hf_20261119_013457_c580bcfa-ae00-473c-a7eb-1eff85b82fbe.png' -o assets/world-atlas.png
+          test $(wc -c < assets/runebreaker.png) -gt 10000
+          test $(wc -c < assets/world-atlas.png) -gt 10000
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
