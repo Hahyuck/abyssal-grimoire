@@ -7,9 +7,9 @@ const p={x:2.5,y:2.5,a:0,hp:100,ammo:8,max:8,w:0,kills:0},enemies=[{x:8.5,y:3.5,
 const art={weapon:new Image(),world:new Image()},ready={weapon:false,world:false};
 art.weapon.crossOrigin='anonymous';art.world.crossOrigin='anonymous';
 art.weapon.onload=()=>{try{const cv=document.createElement('canvas');cv.width=art.weapon.naturalWidth;cv.height=art.weapon.naturalHeight;const cx=cv.getContext('2d',{willReadFrequently:true});cx.drawImage(art.weapon,0,0);const pixels=cx.getImageData(0,0,cv.width,cv.height);for(let i=0;i<pixels.data.length;i+=4){const R=pixels.data[i],G=pixels.data[i+1],B=pixels.data[i+2];if(R>145&&R>G*1.45&&B>G*1.35){pixels.data[i+3]=Math.max(0,255-(Math.min(R,B)-G)*3)}}cx.putImageData(pixels,0,0);art.weapon=cv;ready.weapon=true}catch(e){ready.weapon=false}};
-art.world.onload=()=>{ready.world=true};
-art.weapon.src='https://d8j0ntlcm91z4.cloudfront.net/user_3D3stTPIqnNrvr2c1wNrXfy7DEW/hf_20261119_013541_09b7fad8-0bc9-4ae8-bb7c-fa0424f1508f.png';
-art.world.src='https://d8j0ntlcm91z4.cloudfront.net/user_3D3stTPIqnNrvr2c1wNrXfy7DEW/hf_20261119_013457_c580bcfa-ae00-473c-a7eb-1eff85b82fbe.png';
+art.world.onload=()=>{ready.world=true};art.weapon.onerror=()=>{msg='WEAPON ART FAILED TO LOAD'};art.world.onerror=()=>{msg='WORLD ART FAILED TO LOAD'};
+art.weapon.src='./assets/runebreaker.png';
+art.world.src='./assets/world-atlas.png';
 let animTime=0;
 function drawWeaponSprite(now,W,H){if(!ready.weapon)return false;const aw=art.weapon.width/4,ah=art.weapon.height/3;let frame=0;if(animTime>0){const elapsed=performance.now()-animTime;frame=elapsed<85?1:elapsed<165?2:elapsed<270?3:elapsed<380?4:elapsed<490?5:6;if(elapsed>550)animTime=0}let sx=(frame%4)*aw,sy=Math.floor(frame/4)*ah;const dw=W*.65,dh=dw*ah/aw;g.drawImage(art.weapon,sx,sy,aw,ah,(W-dw)/2,H-dh+dh*.14,dw,dh);return true}
 
